@@ -11,6 +11,15 @@ text_input.addEventListener("input", count_chars)
 function count_chars(){
     let text = text_input.value
     
+    if (text.length == 0){
+        chars_label.textContent = "Characters: 0"
+        chars_no_spaces_label.textContent = "No spaces: 0"
+        words_label.textContent = "Words: 0"
+        paragraphs_label.textContent = "Paragraphs: 0"
+        return;
+        
+    }
+
     let chars = text.length
     let chars_no_spaces = text.replace(/\s/g, "").length
     let words = text.split(" ").length
