@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
-:root {
-
-    --primary: hsl(0, 0%, 95%);
-    --secondary: hsl(0, 0%, 75%);
-
-    --accent: hsl(211, 76%, 32%);
-
-}
-
 * {
 
     padding: 0;
@@ -26,7 +17,7 @@ body{
 
 .main-content{
 
-    height: calc(100vh - 6em);
+    height: calc(100vh - 9em);
 
     margin: 3em 2em;
 
@@ -62,6 +53,22 @@ body{
 
     font-size: 1.4em;
     font-weight: bold;
+
+}
+
+footer{
+    height: 3em;
+    background-color: hsl(214, 25%, 11%);
+
+}
+
+footer .spacer {
+    margin: 0 .5em;
+}
+
+footer p{
+
+    font-size: .7em;
 
 }
 
