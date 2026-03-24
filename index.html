@@ -9,8 +9,22 @@
 </head>
 <body>
     <div class="main-content">
-        <div class="header center">
-            <h1>Character Counter</h1>
+        <div class="tool-bar">
+            <div class="header">
+                <h1>Character Counter</h1>
+            </div>
+            
+            <div class="menu">
+                <p class="sync">
+                    <span id="sync-label">
+                        Autosave: on
+                    </span>
+                    
+                    <svg id="sync-on" style="display: block;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M172-172v-54h122l-36-38q-44-50-67.5-103T167-477q0-102 60.5-185.5T384-778v58q-74 29-118.5 95.5T221-477q0 44 16 87t49 80l42 42v-114h54v210H172Zm404-10v-58q74-29 118.5-95.5T739-483q0-44-16-87t-49-80l-42-42v114h-54v-210h210v54H666l36 38q47 47 69 101.5T793-483q0 102-60.5 185.5T576-182Z"/></svg>
+                    <svg id="sync-off" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M793-75 650-218q-18 12-37 20.5T574-182v-58q10-5 18-9.5t17-9.5L258-610q-20 28-29.5 62t-9.5 71q0 44 16 87t49 80l42 42v-114h54v210H170v-54h122l-36-38q-47-47-69-101.5T165-477q0-48 13.5-91.5T218-650L81-787l31-38 712 712-31 38Zm-51-241-41-41q18-27 27-59t9-67q0-44-16-87t-49-80l-42-42v114h-54v-210h210v54H664l36 38q47 47 69 101.5T791-483q0 45-12 87.5T742-316ZM354-704l-41-41q16-10 33-18.5t36-14.5v58q-9 4-15.5 7.5T354-704Z"/></svg>
+                </p>
+                <button id="save">Save content</button>
+            </div>
         </div>
         <div class="main absolute-center">
             <textarea name="text" id="text"></textarea>
