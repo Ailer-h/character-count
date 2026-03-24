@@ -23,7 +23,8 @@ function count_chars(){
     let chars = text.length
     let chars_no_spaces = text.replace(/\s/g, "").length
     let words = text.split(" ").length
-    let paragraphs = text.split("\n").length
+    let empty_lines = text.split("\n").filter(line => line.trim() !== '').length
+    let paragraphs = text.split("\n").length - empty_lines
     
     chars_label.textContent = "Characters: " + chars
     chars_no_spaces_label.textContent = "No spaces: " + chars_no_spaces
