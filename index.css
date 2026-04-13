@@ -138,3 +138,74 @@ textarea{
     line-height: 1.6em;
 
 }
+
+/* Toasts */
+.toast-queue{
+
+    position: absolute;
+    
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+
+    right: .5em;
+    bottom: .5em;
+
+    max-height: 35em;
+    overflow-y: scroll;
+
+}
+
+.toast{
+
+    min-width: 20em;
+
+    padding: .5em;
+
+    background-color: hsl(132, 59%, 33%);
+    color: white;
+
+    display: grid;
+    place-items: center start;
+    grid-template-columns: 15% 85%;
+   
+    position: relative;
+    border-radius: .2em ;
+
+    display: none;
+
+}
+
+.toast svg {
+
+    width: 2.5em;
+    height: 2.5em;
+
+}
+
+.toast h1 {
+
+    font-size: 1.2em;
+    
+}
+
+.toast p {
+
+    font-size: .8em;
+    font-weight: bold;
+
+}
+
+.toast span {
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    height: .2em;
+    background-color: white;
+    width: 50%;
+
+    border-radius: .2em;
+
+}

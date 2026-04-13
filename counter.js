@@ -1,3 +1,5 @@
+import { ToastQueue } from "./toast.js";
+
 let chars_label = document.getElementById("chars");
 let chars_no_spaces_label = document.getElementById("chars_no_spaces");
 let words_label = document.getElementById("words");
@@ -7,6 +9,8 @@ const text_input = document.getElementById("text");
 const save_btn = document.getElementById("save");
 const sync_label = document.getElementById("sync-label");
 const sync_icons = document.querySelectorAll("svg");
+
+const toastQueue = new ToastQueue("toast-queue")
 
 let timeout = null;
 let autosync = localStorage.getItem("autosync");
@@ -40,6 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
 text_input.addEventListener("input", count_chars)
 save_btn.addEventListener("click", () => {
     localStorage.setItem("text_content", text_input.value);
+    toastQueue.addToast({
+        title: "Content saved",
+        body: "Text content saved on local storage"
+    })
 })
 
 sync_icons.forEach(icon => {
