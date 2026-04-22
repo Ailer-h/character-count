@@ -29,14 +29,14 @@ if (autosync === null) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    count_chars();
-
     let saved_text = localStorage.getItem("text_content");
     
     if (saved_text) {
         text_input.value = saved_text;
     }
-
+    
+    count_chars();
+    
     set_sync_icons(autosync)
 
 })
