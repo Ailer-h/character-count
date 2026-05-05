@@ -8,6 +8,7 @@ let paragraphs_label = document.getElementById("paragraphs");
 const text_input = document.getElementById("text");
 const save_btn = document.getElementById("save");
 const sync_label = document.getElementById("sync-label");
+const last_saved_label = document.getElementById("last-saved");
 const sync_icons = document.querySelectorAll("svg");
 
 const toastQueue = new ToastQueue("toast-queue")
@@ -29,13 +30,14 @@ if (autosync === null) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    let last_saved = localStorage.getItem("last_saved")
     let saved_text = localStorage.getItem("text_content");
     
     if (saved_text) {
         text_input.value = saved_text;
     }
     
-    count_chars();
+    count_chars(false);
     
     set_sync_icons(autosync)
 
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 text_input.addEventListener("input", count_chars)
 save_btn.addEventListener("click", () => {
-    localStorage.setItem("text_content", text_input.value);
+    save_content()
     toastQueue.addToast({
         title: "Content saved",
         body: "Text content saved on local storage"
@@ -54,11 +56,35 @@ sync_icons.forEach(icon => {
     icon.addEventListener("click", change_autosync);
 })
 
-function debounce() {
+function save_content() {
+
+    let saved_date = new Date()
+
+    let date_string = `${saved_date.getDate()}/${saved_date.getMonth() + 1}/${saved_date.getFullYear()} ${saved_date.getHours()}:${saved_date.getMinutes()}:${saved_date.getSeconds()}`;
+
+    localStorage.setItem("text_content", text_input.value);
+    localStorage.setItem("last_saved", date_string);
+
+    last_saved_label.textContent = "Last saved on: " + date_string
+
+}
+
+function auto_save() {
   clearTimeout(timeout);
 
   timeout = setTimeout(() => {
-    localStorage.setItem("text_content", text_input.value);
+    save_content()
+      
+    if (autosync) {
+        
+        document.getElementById("sync-on").classList.add("spin-annimation")
+          
+    }
+
+    setTimeout(() => {
+        document.getElementById("sync-on").classList.remove("spin-annimation")
+    }, 1000)
+        
   }, 5000);
 }
 
@@ -88,7 +114,7 @@ function set_sync_icons(cur_autosync) {
     }
 }
 
-function count_chars(){
+function count_chars(save = true){
     let text = text_input.value
     
     if (text.length == 0){
@@ -96,6 +122,10 @@ function count_chars(){
         chars_no_spaces_label.textContent = "No spaces: 0";
         words_label.textContent = "Words: 0";
         paragraphs_label.textContent = "Paragraphs: 0";
+
+        if (autosync && save) {
+            auto_save();
+        }
         
     }else{
         
@@ -112,7 +142,7 @@ function count_chars(){
 
     }
 
-    if (autosync) {
-        debounce();
+    if (autosync && save) {
+        auto_save();
     }
 }
