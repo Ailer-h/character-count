@@ -54,6 +54,7 @@ body{
 
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 
     gap: .2em;
 
@@ -66,12 +67,22 @@ body{
     background-color: hsl(132, 59%, 33%);
 
     border: none;
-    width: 8em;
     height: 2em;
+    padding: 0 1em;
     border-radius: .3em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4em;
+    white-space: nowrap;
 
     cursor: pointer;
 
+}
+
+.tool-bar .menu button + button{
+    margin-left: 1.2em;
 }
 
 .tool-bar .menu button:hover{
@@ -98,6 +109,7 @@ body{
     font-size: .6em;
 
     margin-right: 3em;
+    white-space: nowrap;
 
     font-style: italic;
     color: rgb(171, 168, 168);
@@ -116,6 +128,10 @@ body{
 .main{
     width: 100%;
     height: 70%;
+
+    box-sizing: border-box;
+    padding: 0 5%;
+    gap: 1em;
 }
 
 .stats{
@@ -149,7 +165,8 @@ footer p{
 textarea{
 
     height: 90%;
-    width: 90%;
+    flex: 1 1 0;
+    min-width: 0;
 
     background-color: hsl(214, 25%, 11%);
     resize: none;
@@ -159,6 +176,129 @@ textarea{
     padding: .5em;
 
     line-height: 1.6em;
+
+}
+
+.markdown-preview{
+
+    display: none;
+
+    height: 90%;
+    flex: 1 1 0;
+    min-width: 0;
+
+    background-color: hsl(214, 25%, 11%);
+
+    padding: .5em;
+
+    line-height: 1.6em;
+
+    text-align: left;
+    overflow-y: auto;
+
+}
+
+.main.split-view .markdown-preview{
+    display: block;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6{
+
+    margin: .5em 0;
+
+}
+
+.markdown-preview p{
+
+    margin-bottom: .8em;
+
+}
+
+.markdown-preview ul,
+.markdown-preview ol{
+
+    margin: .5em 0 .8em 1.5em;
+
+}
+
+.markdown-preview blockquote{
+
+    margin: .5em 0;
+    padding-left: .8em;
+
+    border-left: .2em solid hsl(132, 59%, 33%);
+
+    color: rgb(171, 168, 168);
+
+}
+
+.markdown-preview code{
+
+    background-color: hsl(216, 28%, 7%);
+    padding: .1em .4em;
+    border-radius: .2em;
+
+    font-family: "Courier New", monospace;
+
+}
+
+.markdown-preview pre{
+
+    background-color: hsl(216, 28%, 7%);
+    padding: .8em;
+    border-radius: .3em;
+
+    overflow-x: auto;
+    margin-bottom: .8em;
+
+}
+
+.markdown-preview pre code{
+
+    background-color: transparent;
+    padding: 0;
+
+}
+
+.markdown-preview a{
+
+    color: hsl(132, 59%, 55%);
+
+}
+
+.markdown-preview hr{
+
+    border: none;
+    border-top: 2px solid hsl(214, 25%, 11%);
+    margin: .8em 0;
+
+}
+
+.markdown-preview table{
+
+    border-collapse: collapse;
+    margin-bottom: .8em;
+    width: 100%;
+
+}
+
+.markdown-preview th,
+.markdown-preview td{
+
+    border: 1px solid hsl(214, 25%, 20%);
+    padding: .4em .7em;
+    text-align: left;
+
+}
+
+.markdown-preview th{
+
+    background-color: hsl(214, 25%, 15%);
 
 }
 

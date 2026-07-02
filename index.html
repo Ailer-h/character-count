@@ -25,10 +25,15 @@
                     <svg id="sync-off" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M793-75 650-218q-18 12-37 20.5T574-182v-58q10-5 18-9.5t17-9.5L258-610q-20 28-29.5 62t-9.5 71q0 44 16 87t49 80l42 42v-114h54v210H170v-54h122l-36-38q-47-47-69-101.5T165-477q0-48 13.5-91.5T218-650L81-787l31-38 712 712-31 38Zm-51-241-41-41q18-27 27-59t9-67q0-44-16-87t-49-80l-42-42v114h-54v-210h210v54H664l36 38q47 47 69 101.5T791-483q0 45-12 87.5T742-316ZM354-704l-41-41q16-10 33-18.5t36-14.5v58q-9 4-15.5 7.5T354-704Z"/></svg>
                 </p>
                 <button id="save">Save content</button>
+                <button id="toggle-view">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 128" width="18" height="18" aria-hidden="true"><rect width="198" height="118" x="5" y="5" rx="15" ry="15" fill="none" stroke="#e3e3e3" stroke-width="10"/><path fill="#e3e3e3" d="M30 98V30h20l20 25 20-25h20v68H70V59L50 84 30 59v39zm125 0l-30-33h20V30h20v35h20z"/></svg>
+                    <span id="toggle-view-label">Preview MD</span>
+                </button>
             </div>
         </div>
         <div class="main absolute-center">
             <textarea name="text" id="text" autofocus></textarea>
+            <div id="preview" class="markdown-preview"></div>
         </div>
         <div class="stats absolute-center" style="gap: 15em;">
             <p id="chars">Charachters: 00</p>

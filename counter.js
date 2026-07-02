@@ -1,4 +1,5 @@
 import { ToastQueue } from "./toast.js";
+import { parseMarkdown } from "./markdown.js";
 
 let chars_label = document.getElementById("chars");
 let chars_no_spaces_label = document.getElementById("chars_no_spaces");
@@ -6,15 +7,20 @@ let words_label = document.getElementById("words");
 let paragraphs_label = document.getElementById("paragraphs");
 
 const text_input = document.getElementById("text");
+const preview = document.getElementById("preview");
+const main_container = document.querySelector(".main");
 const save_btn = document.getElementById("save");
+const toggle_view_btn = document.getElementById("toggle-view");
+const toggle_view_label = document.getElementById("toggle-view-label");
 const sync_label = document.getElementById("sync-label");
 const last_saved_label = document.getElementById("last-saved");
-const sync_icons = document.querySelectorAll("svg");
+const sync_icons = document.querySelectorAll(".sync svg");
 
 const toastQueue = new ToastQueue("toast-queue")
 
 let timeout = null;
 let autosync = localStorage.getItem("autosync");
+let is_markdown_view = false;
 
 const str_to_bool = {
     "false": false,
@@ -38,18 +44,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     count_chars(false);
-    
+
     set_sync_icons(autosync)
+    set_view(is_markdown_view)
 
 })
 
-text_input.addEventListener("input", count_chars)
+text_input.addEventListener("input", () => {
+    count_chars()
+    update_preview()
+})
+text_input.addEventListener("keydown", handle_list_continuation)
 save_btn.addEventListener("click", () => {
     save_content()
     toastQueue.addToast({
         title: "Content saved",
         body: "Text content saved on local storage"
     })
+})
+
+toggle_view_btn.addEventListener("click", () => {
+    set_view(!is_markdown_view)
 })
 
 sync_icons.forEach(icon => {
@@ -86,6 +101,79 @@ function auto_save() {
     }, 1000)
         
   }, 5000);
+}
+
+function set_view(markdown_view) {
+
+    is_markdown_view = markdown_view;
+
+    if (is_markdown_view) {
+        update_preview();
+
+        main_container.classList.add("split-view");
+        toggle_view_label.textContent = "Hide preview";
+
+    }else {
+        main_container.classList.remove("split-view");
+        toggle_view_label.textContent = "Preview MD";
+    }
+
+}
+
+function update_preview() {
+    if (is_markdown_view) {
+        preview.innerHTML = parseMarkdown(text_input.value);
+    }
+}
+
+function handle_list_continuation(event) {
+
+    if (!is_markdown_view) return;
+    if (event.key !== "Enter") return;
+    if (text_input.selectionStart !== text_input.selectionEnd) return;
+
+    const value = text_input.value;
+    const cursor = text_input.selectionStart;
+
+    const line_start = value.lastIndexOf("\n", cursor - 1) + 1;
+    const line_end = value.indexOf("\n", cursor);
+    const current_line = value.substring(line_start, cursor);
+
+    const unordered_match = current_line.match(/^(\s*)([-*+])\s+(.*)$/);
+    const ordered_match = current_line.match(/^(\s*)(\d+)([.)])\s+(.*)$/);
+    const blockquote_match = current_line.match(/^(\s*)>\s?(.*)$/);
+
+    const match = unordered_match || ordered_match || blockquote_match;
+    if (!match) return;
+
+    event.preventDefault();
+
+    const content = match[match.length - 1];
+    const indent = match[1];
+
+    if (content.trim() === "") {
+        const line_end_pos = line_end === -1 ? value.length : line_end;
+        text_input.value = value.slice(0, line_start) + "\n" + value.slice(line_end_pos);
+        text_input.selectionStart = text_input.selectionEnd = line_start + 1;
+
+    }else {
+        let marker;
+
+        if (unordered_match) {
+            marker = `${indent}${unordered_match[2]} `;
+        }else if (ordered_match) {
+            marker = `${indent}${parseInt(ordered_match[2], 10) + 1}${ordered_match[3]} `;
+        }else {
+            marker = `${indent}> `;
+        }
+
+        const insertion = "\n" + marker;
+        text_input.value = value.slice(0, cursor) + insertion + value.slice(cursor);
+        text_input.selectionStart = text_input.selectionEnd = cursor + insertion.length;
+    }
+
+    count_chars();
+    update_preview();
 }
 
 function change_autosync() {
